@@ -26,7 +26,7 @@ export function loadStatistic (date) {
 			try {
 				body = JSON.parse(body);
 				// if (body.counts) {
-					dispatch(setStatistic(body));
+					//dispatch(setStatistic(body));
 				// }
 			} catch (e) {
 				console.log('Error parsing results json:', e, body);

@@ -13,7 +13,7 @@ import {
 
 class Statistic extends Component {
 	state = {
-		dateFrom: moment(),
+		dateFrom: moment(1517000013219),
 		dateTo: moment()
 	}
    
@@ -25,10 +25,10 @@ class Statistic extends Component {
 	}
 
 	handleDateChange = (dateType) => (date) => {
-	  this.setState({
+		this.setState({
 		[dateType]: date
-	  });
-	  console.log(date)
+		});
+		console.log(date)
 	}
    
 	render() {
