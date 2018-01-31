@@ -89,7 +89,18 @@ var PrimaryNavigation = React.createClass({
 	renderNavigation () {
 		if (!this.props.sections || !this.props.sections.length) return null;
 
-		return this.props.sections.map((section) => {
+		const extendedSections = [...this.props.sections];
+		extendedSections.push({
+			key: 'statistic',
+			label: 'Statistic',
+			lists: [{
+				key: 'statistic',
+				label: 'Statistic',
+				path: 'statistic'
+			}]
+		})
+
+		return extendedSections.map((section) => {
 			// Get the link and the class name
 			const href = section.lists[0].external ? section.lists[0].path : `${Keystone.adminPath}/${section.lists[0].path}`;
 			const isActive = this.props.currentSectionKey && this.props.currentSectionKey === section.key;
