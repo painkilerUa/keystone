@@ -2,11 +2,14 @@ import {
 	LOAD_COUNTS,
 	COUNTS_LOADING_SUCCESS,
 	COUNTS_LOADING_ERROR,
+	STATISTIC_SUCCESSFULLY_LOADED
 } from './constants';
+import assign from 'object-assign';
 
 const initialState = {
-	dateFrom: null,
-	dateTo: null
+	rows: {},
+	total: null,
+	isLoading: false
 };
 
 function statistic (state = initialState, action) {
@@ -15,11 +18,12 @@ function statistic (state = initialState, action) {
 			return assign({}, state, {
 				loading: true,
 			});
-		case COUNTS_LOADING_SUCCESS:
+		case STATISTIC_SUCCESSFULLY_LOADED:
+			console.log('JUMP')
 			return assign({}, state, {
-				loading: false,
-				counts: action.counts,
-				error: null,
+				isLoading: false,
+				rows: action.payload.rows,
+				total: action.payload.total,
 			});
 		case COUNTS_LOADING_ERROR:
 			return assign({}, state, {

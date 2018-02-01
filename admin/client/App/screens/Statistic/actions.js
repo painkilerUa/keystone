@@ -3,6 +3,7 @@ import {
 	LOAD_COUNTS,
 	COUNTS_LOADING_SUCCESS,
 	COUNTS_LOADING_ERROR,
+	STATISTIC_SUCCESSFULLY_LOADED,
 } from './constants';
 import { NETWORK_ERROR_RETRY_DELAY } from '../../../constants';
 
@@ -24,15 +25,23 @@ export function loadStatistic (date) {
 				return;
 			}
 			try {
-				body = JSON.parse(body);
-				// if (body.counts) {
-					//dispatch(setStatistic(body));
-				// }
+				const payload = JSON.parse(body);
+				if (payload.rows) {
+					console.log(payload)
+					dispatch(setStatistic(payload));
+				}
 			} catch (e) {
 				console.log('Error parsing results json:', e, body);
 //				dispatch(countsLoadingError(e));
 				return;
 			}
 		});
+	};
+}
+
+export function setStatistic (payload) {
+	return {
+		type: STATISTIC_SUCCESSFULLY_LOADED,
+		payload,
 	};
 }

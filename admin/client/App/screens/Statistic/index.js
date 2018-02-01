@@ -13,8 +13,8 @@ import {
 
 class Statistic extends Component {
 	state = {
-		dateFrom: moment(1517000013219),
-		dateTo: moment()
+		dateFrom: moment().utc().hours(0).minutes(0).seconds(0),
+		dateTo: moment().utc().hours(23).minutes(59).seconds(59)
 	}
    
 	componentDidMount () {
@@ -25,13 +25,31 @@ class Statistic extends Component {
 	}
 
 	handleDateChange = (dateType) => (date) => {
+		const correctedDate = dateType === 'dateTo' ? moment(date).hours(23).minutes(59).seconds(59) : date
 		this.setState({
-		[dateType]: date
+			[dateType]: correctedDate
 		});
-		console.log(date)
+		const newDate = {...this.state};
+		newDate[dateType] = correctedDate;
+		this.props.dispatch(loadStatistic(newDate));
 	}
    
 	render() {
+		const tbody = [];
+		Object.keys(this.props.rows).forEach(key => {
+			tbody.push(
+				<tr>
+					<td className="ItemList__col">{key}</td>
+					<td>{this.props.rows[key]}</td>
+				</tr>
+			)				
+		});
+		tbody.push(
+			<tr>
+				<td className="ItemList__col">TOTAL</td>
+				<td>{this.props.total}</td>
+			</tr>
+		)
 		return (
 			<Group block>
 				<Section grow>
@@ -39,12 +57,14 @@ class Statistic extends Component {
 						<h1>Number of Bobbleheads</h1>
 						<div className="select-date-panel">
 							<div className="left-part">
+								<span>From</span>
 								<DatePicker
 									selected={this.state.dateFrom}
 									onChange={this.handleDateChange('dateFrom')}
 								/>
 							</div>
 							<div className="right-part">
+								<span>To</span>
 								<DatePicker
 										selected={this.state.dateTo}
 										onChange={this.handleDateChange('dateTo')}
@@ -60,22 +80,7 @@ class Statistic extends Component {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td className="ItemList__col">29.01.18</td>
-										<td>155</td>
-									</tr>
-									<tr>
-										<td className="ItemList__col">30.01.18</td>
-										<td>25</td>
-									</tr>
-									<tr>
-										<td className="ItemList__col">31.01.18</td>
-										<td>45</td>
-									</tr>
-									<tr>
-										<td className="ItemList__col">TOTAL</td>
-										<td>205</td>
-									</tr>
+									{tbody}
 								</tbody>
 							</table>
 						</div>
@@ -88,7 +93,9 @@ class Statistic extends Component {
 
 
 module.exports = connect((state) => {
+	const { rows, total } = state.statistic;
 	return {
-		loadStatistic: 'state.lists',
+		rows,
+		total
 	};
 })(Statistic);
