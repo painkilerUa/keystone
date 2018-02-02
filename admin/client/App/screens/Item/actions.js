@@ -1,3 +1,4 @@
+import xhr from 'xhr';
 import {
 	SELECT_ITEM,
 	LOAD_DATA,
@@ -6,11 +7,16 @@ import {
 	DRAG_MOVE_ITEM,
 	DRAG_RESET_ITEMS,
 	LOAD_RELATIONSHIP_DATA,
+	RESEND_EMAIL_ERROR,
+	RESEND_EMAIL_SUCCESS,
+	CLEAR_RESEND_EMAIL_MSG
+
 } from './constants';
 
 import {
 	loadItems,
 } from '../List/actions';
+import { setTimeout } from 'timers';
 
 /**
  * Select an item
@@ -191,4 +197,51 @@ export function resetItems () {
 	return {
 		type: DRAG_RESET_ITEMS,
 	};
+}
+
+export function resendEmail (id) {
+	return (dispatch) => {
+		xhr({
+			method: 'post',
+			body: JSON.stringify({
+				id
+			}),
+			url: `/api/resend-email`,
+			headers: {
+				"Content-Type": "application/json"
+			},
+		}, (err, resp, body) => {
+			if (err || resp.statusCode !== 200) {
+				dispatch(resendEmailError("Email hasn't been sent successfully"));
+				return;
+				setTimeout(() => {
+					dispatch(clearResendEmailMsg());
+				}, 3000)
+			}
+			dispatch(resendEmailSuccess('Email has been sent successfully'));
+			setTimeout(() => {
+				dispatch(clearResendEmailMsg());
+			}, 3000)
+		});
+	};
+}
+
+export function resendEmailError (msg) {
+	return {
+		type: RESEND_EMAIL_ERROR,
+		msg
+	};
+}
+
+export function resendEmailSuccess (msg) {
+	return {
+		type: RESEND_EMAIL_SUCCESS,
+		msg,
+	};
+}
+
+export function clearResendEmailMsg () {
+	return {
+		type: CLEAR_RESEND_EMAIL_MSG,
+	}
 }
