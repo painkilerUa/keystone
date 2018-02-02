@@ -13,8 +13,8 @@ import {
 
 class Statistic extends Component {
 	state = {
-		dateFrom: moment().utc().hours(0).minutes(0).seconds(0),
-		dateTo: moment().utc().hours(23).minutes(59).seconds(59)
+		dateFrom: moment().startOf('day'),
+		dateTo: moment().endOf('day')
 	}
    
 	componentDidMount () {
@@ -25,7 +25,7 @@ class Statistic extends Component {
 	}
 
 	handleDateChange = (dateType) => (date) => {
-		const correctedDate = dateType === 'dateTo' ? moment(date).hours(23).minutes(59).seconds(59) : date
+		const correctedDate = dateType === 'dateTo' ? moment(date).endOf('day') : moment(date).startOf('day');
 		this.setState({
 			[dateType]: correctedDate
 		});
@@ -46,8 +46,8 @@ class Statistic extends Component {
 		});
 		tbody.push(
 			<tr>
-				<td className="ItemList__col">TOTAL</td>
-				<td>{this.props.total}</td>
+				<td className="ItemList__col total-bold">TOTAL</td>
+				<td className="total-bold">{this.props.total}</td>
 			</tr>
 		)
 		return (
@@ -61,6 +61,7 @@ class Statistic extends Component {
 								<DatePicker
 									selected={this.state.dateFrom}
 									onChange={this.handleDateChange('dateFrom')}
+									dateFormat="DD/MM/YYYY"
 								/>
 							</div>
 							<div className="right-part">
@@ -68,6 +69,7 @@ class Statistic extends Component {
 								<DatePicker
 										selected={this.state.dateTo}
 										onChange={this.handleDateChange('dateTo')}
+										dateFormat="DD/MM/YYYY"
 									/>
 							</div>
 						</div>
@@ -90,7 +92,6 @@ class Statistic extends Component {
 		)
 	}
 }
-
 
 module.exports = connect((state) => {
 	const { rows, total } = state.statistic;

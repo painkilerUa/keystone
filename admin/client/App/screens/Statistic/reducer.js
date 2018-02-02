@@ -1,7 +1,6 @@
 import {
-	LOAD_COUNTS,
-	COUNTS_LOADING_SUCCESS,
-	COUNTS_LOADING_ERROR,
+	STATISTIC_LOADING,
+	STATISTIC_LOADING_ERROR,
 	STATISTIC_SUCCESSFULLY_LOADED
 } from './constants';
 import assign from 'object-assign';
@@ -9,26 +8,26 @@ import assign from 'object-assign';
 const initialState = {
 	rows: {},
 	total: null,
-	isLoading: false
+	isLoading: false,
+	errors: null
 };
 
 function statistic (state = initialState, action) {
 	switch (action.type) {
-		case LOAD_COUNTS:
+		case STATISTIC_LOADING:
 			return assign({}, state, {
-				loading: true,
+				isLoading: true,
 			});
 		case STATISTIC_SUCCESSFULLY_LOADED:
-			console.log('JUMP')
 			return assign({}, state, {
 				isLoading: false,
 				rows: action.payload.rows,
 				total: action.payload.total,
 			});
-		case COUNTS_LOADING_ERROR:
+		case STATISTIC_LOADING_ERROR:
 			return assign({}, state, {
 				loading: false,
-				error: action.error,
+				error: action.err,
 			});
 		default:
 			return state;

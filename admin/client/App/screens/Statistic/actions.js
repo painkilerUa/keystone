@@ -1,17 +1,16 @@
 import xhr from 'xhr';
 import {
-	LOAD_COUNTS,
-	COUNTS_LOADING_SUCCESS,
-	COUNTS_LOADING_ERROR,
+	STATISTIC_LOADING,
+	STATISTIC_LOADING_ERROR,
 	STATISTIC_SUCCESSFULLY_LOADED,
 } from './constants';
 import { NETWORK_ERROR_RETRY_DELAY } from '../../../constants';
 
 export function loadStatistic (date) {
 	return (dispatch) => {
-		// dispatch({
-		// 	type: LOAD_COUNTS,
-		// });
+		dispatch({
+			type: STATISTIC_LOADING,
+		});
 		xhr({
 			method: 'post',
 			body: JSON.stringify(date),
@@ -21,7 +20,7 @@ export function loadStatistic (date) {
 			},
 		}, (err, resp, body) => {
 			if (err) {
-				// dispatch(countsLoadingError(err));
+				dispatch(statisticLoadingError(err));
 				return;
 			}
 			try {
@@ -30,9 +29,9 @@ export function loadStatistic (date) {
 					console.log(payload)
 					dispatch(setStatistic(payload));
 				}
-			} catch (e) {
-				console.log('Error parsing results json:', e, body);
-//				dispatch(countsLoadingError(e));
+			} catch (err) {
+				console.log('Error parsing results json:', err, body);
+				dispatch(statisticLoadingError(err));
 				return;
 			}
 		});
@@ -42,6 +41,13 @@ export function loadStatistic (date) {
 export function setStatistic (payload) {
 	return {
 		type: STATISTIC_SUCCESSFULLY_LOADED,
+		payload,
+	};
+}
+
+export function statisticLoadingError (payload) {
+	return {
+		type: STATISTIC_LOADING_ERROR,
 		payload,
 	};
 }
