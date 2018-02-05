@@ -129,9 +129,9 @@ module.exports = Field.create({
 								value={this.state.timeValue}
 							/>
 						</Section>
-						<Section>
+						{/* <Section>
 							<Button onClick={this.setNow}>Now</Button>
-						</Section>
+						</Section> */}
 					</Group>
 					<input
 						name={this.getInputName(this.props.paths.tzOffset)}
