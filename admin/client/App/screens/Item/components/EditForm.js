@@ -371,8 +371,12 @@ var EditForm = React.createClass({
 	},
 	resendEmail () {
 		const { id } = this.props.data;
-		this.props.dispatch(resendEmail(id));
-		console.log("resend")
+		const { name, email } = this.props.data.fields;
+		this.props.dispatch(resendEmail({
+			id,
+			name,
+			email
+		}));
 	},
 	render () {
 		const msgClassNane = this.props.resendEmail.isSuccess ? 'msg-success' : 'msg-errors'

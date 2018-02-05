@@ -199,25 +199,28 @@ export function resetItems () {
 	};
 }
 
-export function resendEmail (id) {
+export function resendEmail (payload) {
 	return (dispatch) => {
 		xhr({
-			method: 'post',
+			method: 'POST',
 			body: JSON.stringify({
-				id
+				email: payload.email,
+				name: payload.name
 			}),
-			url: `/api/resend-email`,
+			url: `/api/fileupload/${payload.id}/update`,
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				"authorization": "HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6Rjs"
 			},
 		}, (err, resp, body) => {
 			if (err || resp.statusCode !== 200) {
 				dispatch(resendEmailError("Email hasn't been sent successfully"));
-				return;
 				setTimeout(() => {
 					dispatch(clearResendEmailMsg());
-				}, 3000)
+				}, 3000);
+				return;
 			}
+			// console.log('body', body)
 			dispatch(resendEmailSuccess('Email has been sent successfully'));
 			setTimeout(() => {
 				dispatch(clearResendEmailMsg());
