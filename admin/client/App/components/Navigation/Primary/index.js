@@ -130,6 +130,10 @@ var PrimaryNavigation = React.createClass({
 						{this.renderNavigation()}
 					</ul>
 					{this.renderFrontLink()}
+					<div className="navbar-link-tutorial">
+						<span>Latest App Release: v2.5</span>
+						<span>Download the <a href="https://www.google.com/" target="_blank">Tutorial Document</a></span>
+					</div>					
 				</Container>
 			</nav>
 		);

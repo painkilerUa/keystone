@@ -148,7 +148,6 @@ var ItemView = React.createClass({
 			...this.props.currentList
 		}		
 		if (this.props.currentList) {
-			console.log('suc')
 			const updatedFields = {};
 			Object.keys(this.props.currentList.fields).forEach(key => {
 				updatedFields[key] = {
@@ -182,6 +181,7 @@ var ItemView = React.createClass({
 								list={this.props.currentList}
 								data={this.props.data}
 								toggleCreate={this.toggleCreateModal}
+								routeParams={this.props.routeParams}
 							/>
 							<CreateForm
 								list={this.props.currentList}

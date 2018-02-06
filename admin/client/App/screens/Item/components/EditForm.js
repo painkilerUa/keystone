@@ -213,6 +213,7 @@ var EditForm = React.createClass({
 				placeholder: nameField.label,
 				size: 'large',
 			};
+			nameFieldProps.disabled = this.props.router.params.listId === 'file-uploads';
 			return wrapNameField(
 				React.createElement(Fields[nameField.type], nameFieldProps)
 			);

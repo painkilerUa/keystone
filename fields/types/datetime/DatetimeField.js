@@ -127,6 +127,7 @@ module.exports = Field.create({
 								onChange={this.timeChanged}
 								placeholder="HH:MM:SS am/pm"
 								value={this.state.timeValue}
+								disabled={this.props.disabled}
 							/>
 						</Section>
 						{/* <Section>
@@ -142,7 +143,7 @@ module.exports = Field.create({
 			);
 		} else {
 			input = (
-				<FormInput noedit>
+				<FormInput noedit disabled={this.props.disabled}>
 					{this.format(this.props.value, this.props.formatString)}
 				</FormInput>
 			);
