@@ -120,6 +120,7 @@ var PrimaryNavigation = React.createClass({
 		});
 	},
 	render () {
+		const APP_VERSION = 'v2.1';
 		if (!this.state.navIsVisible) return null;
 
 		return (
@@ -131,7 +132,7 @@ var PrimaryNavigation = React.createClass({
 					</ul>
 					{this.renderFrontLink()}
 					<div className="navbar-link-tutorial">
-						<span>Latest App Release: v2.5</span>
+						<span>{`Latest App Release: ${APP_VERSION}`}</span>
 						<span>Download the <a href="https://www.google.com/" target="_blank">Tutorial Document</a></span>
 					</div>					
 				</Container>
