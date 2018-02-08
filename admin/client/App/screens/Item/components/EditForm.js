@@ -400,7 +400,7 @@ var EditForm = React.createClass({
 						<div>
 							<button
 								onClick={this.resendEmail}
-								className="css-2960tt"
+								className="resend-email-btn"
 								disabled={!!this.props.resendEmail.msg}
 								type="button">Resend email</button>
 							{
@@ -409,9 +409,9 @@ var EditForm = React.createClass({
 								) : ''
 							}
 						</div>
-					) : ''
+					) : this.renderFooterBar()
 				}
-				{this.renderFooterBar()}
+
 				<ConfirmationDialog
 					confirmationLabel="Reset"
 					isOpen={this.state.resetDialogIsOpen}

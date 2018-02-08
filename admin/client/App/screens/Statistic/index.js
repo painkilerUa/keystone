@@ -13,7 +13,7 @@ import {
 
 class Statistic extends Component {
 	state = {
-		dateFrom: moment().startOf('day'),
+		dateFrom: moment().startOf('month'),
 		dateTo: moment().endOf('day')
 	}
    
@@ -22,6 +22,10 @@ class Statistic extends Component {
 			dateFrom: this.state.dateFrom,
 			dateTo: this.state.dateTo
 		}));
+		const datePickers=document.getElementsByClassName("react-datepicker__input-container");
+		for(let i=0; i< datePickers.length; i++) {
+			datePickers[i].childNodes[0].setAttribute("readOnly", true);
+		}
 	}
 
 	handleDateChange = (dateType) => (date) => {
@@ -57,20 +61,24 @@ class Statistic extends Component {
 						<h1>Number of Bobbleheads</h1>
 						<div className="select-date-panel">
 							<div className="left-part">
-								<span>From</span>
+								<span>From: </span>
 								<DatePicker
 									selected={this.state.dateFrom}
 									onChange={this.handleDateChange('dateFrom')}
-									dateFormat="DD/MM/YYYY"
+									dateFormat="YYYY-MM-DD"
+									inputProps={{disabled: true}}
 								/>
+								<span> YYYY-MM-DD </span>
 							</div>
 							<div className="right-part">
-								<span>To</span>
+								<span>To: </span>
 								<DatePicker
 										selected={this.state.dateTo}
 										onChange={this.handleDateChange('dateTo')}
-										dateFormat="DD/MM/YYYY"
+										dateFormat="YYYY-MM-DD"
+										inputProps={{disabled: true}}
 									/>
+								<span> YYYY-MM-DD </span>
 							</div>
 						</div>
 						<div className="ItemList-wrapper">
