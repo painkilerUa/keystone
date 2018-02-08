@@ -26,7 +26,7 @@ export function loadStatistic (date) {
 			try {
 				const payload = JSON.parse(body);
 				if (payload.rows) {
-					console.log(payload)
+					//console.log(payload)
 					dispatch(setStatistic(payload));
 				}
 			} catch (err) {

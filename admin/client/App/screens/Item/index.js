@@ -144,23 +144,19 @@ var ItemView = React.createClass({
 	},
 	render () {
 		// Checking is it match '/file-uploads/' path this.props.routeParams.listId // itemId
-		const currentList = {
-			...this.props.currentList
-		}		
-		if (this.props.currentList) {
-			const updatedFields = {};
-			Object.keys(this.props.currentList.fields).forEach(key => {
-				updatedFields[key] = {
-					...this.props.currentList.fields[key],
-					disabled: true
-				}
-			})
-			currentList.fields = updatedFields;
+		const currentList = this.props.currentList;
+		if (this.props.routeParams.listId === 'file-uploads') {
+			if (currentList) {
+				const updatedFields = {};
+				Object.keys(currentList.fields).forEach(key => {
+					updatedFields[key] = {
+						...currentList.fields[key],
+						disabled: true
+					}
+				})
+				currentList.fields = updatedFields;
+			}
 		}
-
-
-		
-
 
 		// If we don't have any data yet, show the loading indicator
 		if (!this.props.ready) {

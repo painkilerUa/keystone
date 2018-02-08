@@ -120,7 +120,7 @@ var PrimaryNavigation = React.createClass({
 		});
 	},
 	render () {
-		const APP_VERSION = 'v2.1';
+		const APP_VERSION = '0.1.96 (10601)';
 		if (!this.state.navIsVisible) return null;
 
 		return (
