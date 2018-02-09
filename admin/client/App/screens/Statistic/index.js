@@ -13,8 +13,8 @@ import {
 
 class Statistic extends Component {
 	state = {
-		dateFrom: moment().startOf('month'),
-		dateTo: moment().endOf('day')
+		dateFrom: moment.utc().startOf('month'),
+		dateTo: moment.utc().endOf('day')
 	}
    
 	componentDidMount () {
@@ -29,7 +29,8 @@ class Statistic extends Component {
 	}
 
 	handleDateChange = (dateType) => (date) => {
-		const correctedDate = dateType === 'dateTo' ? moment(date).endOf('day') : moment(date).startOf('day');
+		const correctedDate = dateType === 'dateTo' ? moment.utc(date).endOf('day') : moment.utc(date).startOf('day');
+		console.log('correctedDate', correctedDate);
 		this.setState({
 			[dateType]: correctedDate
 		});
