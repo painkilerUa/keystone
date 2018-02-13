@@ -30,7 +30,6 @@ class Statistic extends Component {
 
 	handleDateChange = (dateType) => (date) => {
 		const correctedDate = dateType === 'dateTo' ? moment.utc(date).endOf('day') : moment.utc(date).startOf('day');
-		console.log('correctedDate', correctedDate);
 		this.setState({
 			[dateType]: correctedDate
 		});
